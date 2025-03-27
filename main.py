@@ -20,7 +20,7 @@ def dihotomy_method(func, a, b, accuracy):
         x2=(b+a+accuracy)/2
         y1 = func(x1)
         y2 = func(x2)
-        print(f'iter№: {i}|     a: {round(a, 4)}|     b: {round(b, 4)}|     x1: {round(x1, 4)}|       x2: {round(x2, 4)}|       y1: {round(y1, 4)}|       y2: {round(y2, 4)}')
+        print(f'iter№: {i}|     a: {round(a, 6)}|     b: {round(b, 6)}|     x1: {round(x1, 6)}|       x2: {round(x2, 6)}|       y1: {round(y1, 6)}|       y2: {round(y2, 6)}')
         if y1>y2:
             a = x1
         else:
@@ -28,7 +28,7 @@ def dihotomy_method(func, a, b, accuracy):
         if b-a < 2*accuracy:
             xm=(a+b)/2
             ym=func(xm)
-            return [xm, float(ym), i]
+            return f"рассичитанное значение x: {xm}, рассчитанное значение функции в точке: {float(ym)}, Количество итераций: {i}"
 
 def gold_method(func, a, b, accuracy):
     x1 = 0.382 * (b - a) + a
@@ -38,7 +38,7 @@ def gold_method(func, a, b, accuracy):
     i=0
     while True:
         i+=1
-        print(f'iter№: {i}|     a: {round(a, 4)}|     b: {round(b, 4)}|     x1: {round(x1, 4)}|       x2: {round(x2, 4)}|       y1: {round(y1, 4)}|       y2: {round(y2, 4)}')
+        print(f'iter№: {i}|     a: {round(a, 6)}|     b: {round(b, 6)}|     x1: {round(x1, 6)}|       x2: {round(x2, 6)}|       y1: {round(y1, 6)}|       y2: {round(y2, 6)}')
         if y1>=y2:
             a = x1
             x1 = x2
@@ -54,7 +54,7 @@ def gold_method(func, a, b, accuracy):
         if b-a < 2*accuracy:
             xm=(a+b)/2
             ym=func(xm)
-            return [xm, float(ym), i]
+            return f"рассичитанное значение x: {xm}, рассчитанное значение функции в точке: {float(ym)}, Количество итераций: {i}"
 
 def hord_method(func_diff, a, b, accuracy):
     i=0
@@ -62,9 +62,9 @@ def hord_method(func_diff, a, b, accuracy):
         i+=1
         x_per = a - func_diff(a)/(func_diff(a)-func_diff(b))*(a-b)
         fdx = func_diff(x_per)
-        print(f'iter№: {i}|     a: {round(a, 4)}|     b: {round(b, 4)}|     x_per: {round(x_per, 4)}|       f`(x_per): {fdx}')
+        print(f'iter№: {i}|     a: {round(a, 6)}|     b: {round(b, 6)}|     x_per: {round(x_per, 6)}|       f`(x_per): {round(fdx, 6)}')
         if abs(fdx)<accuracy:
-            return [float(x_per), float(fdx), i]
+            return f"рассичитанное значение x: {x_per}, рассчитанное значение производной функции в точке: {float(fdx)}, Количество итераций: {i}"
         if fdx>0:
             b = x_per
         else:
@@ -76,13 +76,17 @@ def Newton_method(func_diff, func_sec_diff, a, b, accuracy):
     while True:
         i+=1
         fdx = func_diff(x_per)
-        print(f'iter№: {i}|     a: {round(a, 4)}|     b: {round(b, 4)}|     x_per: {round(x_per, 4)}|       f`(x_per): {fdx}')
+        print(f'iter№: {i}|     a: {round(a, 6)}|     b: {round(b, 6)}|     x_per: {round(x_per, 6)}|       f`(x_per): {round(fdx, 6)}')
         if abs(func_diff(x_per)) < accuracy:
-            return [float(x_per), float(func_diff(x_per)), i]
+            return f"рассичитанное значение x: {x_per}, рассчитанное значение производной функции в точке: {float(fdx)}, Количество итераций: {i}"
         x_per = x_per - fdx / func_sec_diff(x_per)
 
-print('Ответ:', dihotomy_method(func, 0, np.pi/4, 0.03))
-print('Ответ:', gold_method(func, 0, np.pi/4, 0.03))
-print('Ответ:', hord_method(func_diff, 0, np.pi/4, 0.03))
-print('Ответ:', Newton_method(func_diff, func_sec_diff,0, np.pi/4, 0.03))
+print("Метод дихотомии")
+print(dihotomy_method(func, 0, np.pi/4, 0.0001))
+print("Метод золотого сечения")
+print(gold_method(func, 0, np.pi/4, 0.0001))
+print("Метод хорд")
+print(hord_method(func_diff, 0, np.pi/4, 0.0001))
+print("Метод Ньютона")
+print(Newton_method(func_diff, func_sec_diff,0, np.pi/4, 0.0001))
 
